@@ -16,7 +16,7 @@ const dbConnect = require("./data-base/mongoDB/config/config");
 const app = express();
 
 //--Подключение роутов--------------------------------------------
-const indexRouter = require("./routes/userRouter");
+const indexRouter = require("./routers/indexRouter");
 
 //--Подключение midllewares---------------------------------------
 app.use(morgan("dev")); //логирование запросов
@@ -26,6 +26,9 @@ app.use(cors()); //возможность отправлять запросы с
 
 //--Роутинг-------------------------------------------------------
 app.use("/api", indexRouter);
+// app.use("/", (req, res) => {
+//   res.status(200).json({ message: "working!" });
+// });
 
 //--Обработка ошибок----------------------------------------------
 app.use(errorMiddleware);
