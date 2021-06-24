@@ -1,4 +1,4 @@
-const User = require("../data-base/models/userModel");
+const User = require("../data-base/mongoDB/models/userModel");
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const mailService = require("./mail-service");

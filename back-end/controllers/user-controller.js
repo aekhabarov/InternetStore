@@ -5,6 +5,7 @@ const ApiError = require("../exceptions/api-error");
 class UserController {
   async registration(req, res, next) {
     try {
+      //Валидация введенных данных с помощью пакета express-validator
       const errors = validationResult(req, res, next);
       if (!errors.isEmpty()) {
         return next(

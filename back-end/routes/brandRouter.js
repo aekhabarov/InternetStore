@@ -1,7 +1,6 @@
 const router = require("express").Router();
 
-router.route("/").get(async (req, res) => {
-  res.status(200);
-});
+router.post("/");
+router.get("/");
 
 module.exports = router;
