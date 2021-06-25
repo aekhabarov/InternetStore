@@ -49,7 +49,7 @@ const BasketDevice = sequelize.define("basket_device", {
   },
 });
 
-const Device = sequelize.define("basket_device", {
+const Device = sequelize.define("device", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -106,8 +106,8 @@ Basket.belongsTo(User);
 User.hasMany(Rating);
 Rating.belongsTo(User);
 //В корзине может быть несколько устройств
-Basket.hasMany(Device);
-Device.belongsTo(Basket);
+Basket.hasMany(BasketDevice);
+BasketDevice.belongsTo(Basket);
 //Типу может принадлежать несколько устройств
 Type.hasMany(Device);
 Device.belongsTo(Type);
@@ -117,6 +117,9 @@ Device.belongsTo(Brand);
 //Устройство может иметь несколько оценок
 Device.hasMany(Rating);
 Rating.belongsTo(Device);
+//
+Device.hasMany(BasketDevice);
+BasketDevice.belongsTo(Device);
 //Устройство может иметь несколько полей описаний
 Device.hasMany(DeviceInfo);
 DeviceInfo.belongsTo(Device);
