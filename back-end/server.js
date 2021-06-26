@@ -11,9 +11,6 @@ const path = require("path");
 //--Подключение переменных окружения------------------------------
 const { env } = require("process");
 
-//----------------------------------------------------------------
-const dbConnect = require("./data-base/mongoDB/config/config");
-
 //--Создание экземпляра приложения--------------------------------
 const app = express();
 

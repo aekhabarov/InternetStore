@@ -34,11 +34,12 @@ class TokenService {
   }
 
   async saveToken(userId, accessToken, refreshToken) {
-    console.log(userId);
-    console.log(accessToken);
-    console.log(refreshToken);
+    // console.log("userId ====>>>", userId);
+    // console.log("accessToken ====>>>", accessToken);
+    // console.log("refreshToken ====>>>", refreshToken);
     try {
       const tokenData = await Token.findOne({ where: { userId } });
+      console.log("tokenData ====>>>", tokenData);
       if (tokenData) {
         tokenData.update({ refreshToken });
         return tokenData;

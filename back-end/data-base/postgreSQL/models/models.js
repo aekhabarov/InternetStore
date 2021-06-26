@@ -1,6 +1,6 @@
-const sequelize = require("../config/config");
 const { DataTypes } = require("sequelize");
-const { refresh } = require("../../../services/buba-service");
+const sequelize = require("../config/config");
+// const { refresh } = require("../../../services/user-service");
 
 const User = sequelize.define("user", {
   id: {
@@ -42,7 +42,7 @@ const Basket = sequelize.define("basket", {
   },
 });
 
-const BasketDevice = sequelize.define("basket_device", {
+const BasketDevice = sequelize.define("basketDevice", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -57,6 +57,11 @@ const Device = sequelize.define("device", {
     autoIncrement: true,
   },
   name: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  article: {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
@@ -96,14 +101,14 @@ const Token = sequelize.define("token", {
   refreshToken: { type: DataTypes.STRING, unique: true },
 });
 
-const DeviceInfo = sequelize.define("device_info", {
+const DeviceInfo = sequelize.define("deviceInfo", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: { type: DataTypes.STRING, unique: true, allowNull: false },
   describtion: { type: DataTypes.STRING, unique: true, allowNull: false },
 });
 
 //Связующая таблица
-const TypeBrand = sequelize.define("type_brand", {
+const TypeBrand = sequelize.define("typeBrand", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 //Связи
