@@ -39,7 +39,7 @@ class TokenService {
     // console.log("refreshToken ====>>>", refreshToken);
     try {
       const tokenData = await Token.findOne({ where: { userId } });
-      console.log("tokenData ====>>>", tokenData);
+      // console.log("tokenData ====>>>", tokenData);
       if (tokenData) {
         tokenData.update({ refreshToken });
         return tokenData;
