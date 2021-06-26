@@ -1,6 +1,6 @@
 const uuid = require("uuid");
 const path = require("path");
-const { Device } = require("../data-base/postgreSQL/models/models");
+const { Device, DeviceInfo } = require("../data-base/postgreSQL/models/models");
 const ApiError = require("../errors/api-error");
 
 class DeviceController {
@@ -10,7 +10,6 @@ class DeviceController {
       const { img } = req.files;
       let fileName = uuid.v4() + ".jpg";
       img.mv(path.resolve(__dirname, "..", "static", fileName));
-
       const device = await Device.create({
         name,
         price,
@@ -18,9 +17,19 @@ class DeviceController {
         typeId,
         img: fileName,
       });
+      if (info) {
+        info = JSON.parce(info);
+        info.forEach((i) =>
+          DeviceInfo.create({
+            title: i.title,
+            description: i.description,
+            deviceId: device.id,
+          })
+        );
+      }
       return res.json(device);
     } catch (error) {
-      next(ApiError.BadRequest(e.message));
+      next(ApiError.BadRequest(error.message));
     }
   }
   async getAll(req, res) {
@@ -30,16 +39,24 @@ class DeviceController {
     limit = limit || 9;
     let offset = page * limit - limit;
     if (!brandId && !typeId) {
-      devices = await Device.findAll({ limit, offset });
+      devices = await Device.findAndCountAll({ limit, offset });
     }
     if (brandId && !typeId) {
-      devices = await Device.findAll({ where: { brandId }, limit, offset });
+      devices = await Device.findAndCountAll({
+        where: { brandId },
+        limit,
+        offset,
+      });
     }
     if (!brandId && typeId) {
-      devices = await Device.findAll({ where: { typeId }, limit, offset });
+      devices = await Device.findAndCountAll({
+        where: { typeId },
+        limit,
+        offset,
+      });
     }
     if (brandId && typeId) {
-      devices = await Device.findAll({
+      devices = await Device.findAndCountAll({
         where: { typeId, brandId },
         limit,
         offset,
@@ -47,7 +64,19 @@ class DeviceController {
     }
     return res.json(devices);
   }
-  async getOne(req, res) {}
+  async getOne(req, res, next) {
+    const { id } = req.params;
+    console.log(id);
+    try {
+      const device = await Device.findOne({
+        where: { id },
+        include: [{ model: DeviceInfo, as: "info" }],
+      });
+      return res.json(device);
+    } catch (error) {
+      next(ApiError.BadRequest(error.message));
+    }
+  }
 }
 
 module.exports = new DeviceController();

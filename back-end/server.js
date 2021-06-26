@@ -45,8 +45,9 @@ const startServer = () => {
       console.clear();
       await sequelize.authenticate();
       await sequelize.sync();
-      console.log(`Server has been started on PORT: ${PORT}`);
+      console.log("\x1b[31m", `Server has been started on PORT: ${PORT}`);
       console.log(`PSQL connected on PORT: ${process.env.DB_PORT}`);
+      console.log("\x1b[0m");
       // dbConnect(); //<<-- Подключение базы данных MongoDB
     });
   } catch (error) {

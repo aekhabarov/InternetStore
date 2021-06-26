@@ -121,7 +121,7 @@ Rating.belongsTo(Device);
 Device.hasMany(BasketDevice);
 BasketDevice.belongsTo(Device);
 //Устройство может иметь несколько полей описаний
-Device.hasMany(DeviceInfo);
+Device.hasMany(DeviceInfo, { as: "info" });
 DeviceInfo.belongsTo(Device);
 //Тип устройства может принадлежать нескольким брендам
 Type.belongsToMany(Brand, { through: TypeBrand });
