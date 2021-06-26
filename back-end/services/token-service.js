@@ -1,16 +1,16 @@
 const jwt = require("jsonwebtoken");
-const Token = require("../data-base/mongoDB/models/tokenModel");
+const { Token } = require("../data-base/postgreSQL/models/models");
 
 class TokenService {
   generateTokens(payload) {
-    const accesToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
+    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
       expiresIn: "20m",
     });
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
       expiresIn: "20d",
     });
     return {
-      accesToken,
+      accessToken,
       refreshToken,
     };
   }
@@ -33,14 +33,21 @@ class TokenService {
     }
   }
 
-  async saveToken(userId, refreshToken) {
-    const tokenData = await Token.findOne({ user: userId });
-    if (tokenData) {
-      tokenData.refreshToken = refreshToken;
-      return tokenData.save();
+  async saveToken(userId, accessToken, refreshToken) {
+    console.log(userId);
+    console.log(accessToken);
+    console.log(refreshToken);
+    try {
+      const tokenData = await Token.findOne({ where: { userId } });
+      if (tokenData) {
+        tokenData.update({ refreshToken });
+        return tokenData;
+      }
+      const token = await Token.create({ userId, accessToken, refreshToken });
+      return token;
+    } catch (error) {
+      console.log(error);
     }
-    const token = await Token.create({ user: userId, refreshToken });
-    return token;
   }
 
   async removeToken(refreshToken) {
