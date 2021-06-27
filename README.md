@@ -5,7 +5,7 @@
 ## Back-end
 
 - Express.js
-- JWT авторизация
+- JWT authorization
 - PostgreSQL
 - Sequelize-ORM
 

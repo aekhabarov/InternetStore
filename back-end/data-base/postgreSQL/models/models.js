@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/config");
-// const { refresh } = require("../../../services/user-service");
 
 const User = sequelize.define("user", {
   id: {
