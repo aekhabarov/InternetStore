@@ -1,11 +1,14 @@
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import Auth from "./components/Auth/Auth";
+import AppRouter from "./components/AppRouter/AppRouter";
+import { BrowserRouter } from "react-router-dom";
+
+import Authentification from "./components/Authentification/Authentification";
 
 function App() {
   return (
-    <div className="App">
-      <Auth />
-    </div>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   );
 }
 
