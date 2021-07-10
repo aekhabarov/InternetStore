@@ -2,6 +2,7 @@ const router = require("express").Router();
 const userController = require("../controllers/user-controller");
 const { body } = require("express-validator");
 const authMidlleware = require("../midllewares/auth-midlleware");
+const errorMidlleware = require("../midllewares/error-midlleware");
 
 router.post(
   "/registration",

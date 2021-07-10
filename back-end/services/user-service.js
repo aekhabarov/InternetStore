@@ -49,6 +49,7 @@ class UserService {
       return { ...tokens, user: userDto };
     } catch (error) {
       console.log(error);
+      return error;
     }
   }
   //активация аккаунта по ссылке из e-mail

@@ -1,19 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 import {Container, Card, Form, Button, Row} from "react-bootstrap";
 
 const Authentification = () => {
-  const isLogin = true;
+
+  const [logReg, setLogReg] = useState(true);
   return (
     <Container 
         className="d-flex justify-content-center align-items-center"
         style={{height: window.innerHeight}}>
           <Card style={{width: 600}} className="p-5">
             <h2 className="m-auto">
-              {isLogin ? 'Авторизация': 
+              {logReg ? 'Авторизация': 
               'Регистрация'}
             </h2>
             <Form>
-            {isLogin ? <>
+            {logReg ? <>
               <Form.Control 
               className="mt-3"
               placeholder="Введите ваш email..."
@@ -38,12 +39,12 @@ const Authentification = () => {
             }
 
               <Row className="d-flex justify-content-between pl-3 pr-3">
-                  <div className="mt-3">
-                    {isLogin ? 
+                  <div className="mt-3" onClick={()=>{setLogReg(prev => !prev)}}>
+                    {logReg ? 
                     'Зарегистрироваться'
                     : 'Авторизоваться'}
                   </div>
-                    {isLogin? 
+                    {logReg? 
                   <Button className="mt-3" variant={"outline-success"}>
                     Войти 
                   </Button>

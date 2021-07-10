@@ -1,7 +1,7 @@
 const ApiError = require("../errors/api-error");
 
 module.exports = function (err, req, res, next) {
-  console.log(err);
+  console.log("\x1b[34m", "error-midlleware:", err);
   if (err instanceof ApiError) {
     return res
       .status(err.status)

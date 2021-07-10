@@ -11,15 +11,18 @@ class UserController {
         return next(
           ApiError.BadRequest("Ошибка при валидации", errors.array())
         );
+      } else {
+        const { email, password, role } = req.body;
+        const userData = await userService.registration(email, password, role);
+        if (userData instanceof ApiError) {
+          throw ApiError.BadRequest(userData.message);
+        }
+        res.cookie("refreshToken", userData.refreshToken, {
+          maxAge: 20 * 24 * 60 * 60 * 1000,
+          httpOnly: true,
+        });
+        return res.json(userData);
       }
-      const { email, password, role } = req.body;
-      console.log(email, password, role);
-      const userData = await userService.registration(email, password, role);
-      res.cookie("refreshToken", userData.refreshToken, {
-        maxAge: 20 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-      });
-      return res.json(userData);
     } catch (error) {
       next(error);
     }
