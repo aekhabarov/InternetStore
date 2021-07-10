@@ -1,9 +1,15 @@
 import React, {useState} from "react";
 import {Container, Card, Form, Button, Row} from "react-bootstrap";
-
+//Helper-функция отправки данных на сервер
+import sendData from "./helpers/sendData";
 const Authentification = () => {
-
+  //Переключатель между авторизацией и регистрацией
   const [logReg, setLogReg] = useState(true);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(' ');
+
   return (
     <Container 
         className="d-flex justify-content-center align-items-center"
@@ -13,28 +19,45 @@ const Authentification = () => {
               {logReg ? 'Авторизация': 
               'Регистрация'}
             </h2>
-            <Form>
+            <Form onSubmit={(event) => {sendData(event, email, password, setError, name, logReg)}}>
             {logReg ? <>
               <Form.Control 
               className="mt-3"
               placeholder="Введите ваш email..."
+              value = {email}
+              onChange = {(event) => setEmail(event.target.value)}
+              onFocus = {() => setError('')}
               />
               <Form.Control 
               className="mt-3"
               placeholder="Введите ваш password..."
+              type = "password"
+              value = {password}
+              onChange = {(event) => setPassword(event.target.value)}
+              onFocus = {() => setError('')}
               /> </>
               : <>
               <Form.Control 
               className="mt-3"
               placeholder="Введите вашe имя..."
+              value = {name}
+              onChange = {(event) => setName(event.target.value)}
+              onFocus = {() => setError('')}
               />
               <Form.Control 
               className="mt-3"
               placeholder="Введите ваш email..."
+              value = {email}
+              onChange = {(event) => setEmail(event.target.value)}
+              onFocus = {() => setError('')}
               />
               <Form.Control 
               className="mt-3"
               placeholder="Введите ваш password..."
+              type = "password"
+              value = {password}
+              onChange = {(event) => setPassword(event.target.value)}
+              onFocus = {() => setError('')}
               /></>
             }
 
@@ -45,16 +68,21 @@ const Authentification = () => {
                     : 'Авторизоваться'}
                   </div>
                     {logReg? 
-                  <Button className="mt-3" variant={"outline-success"}>
+                  <Button className="mt-3"
+                  type = "submit" 
+                  variant={"outline-success"}>
                     Войти 
                   </Button>
                     : 
-                  <Button className="mt-3" variant={"outline-success"}>
+                  <Button className="mt-3" 
+                  type = "submit" 
+                  variant={"outline-success"}>
                     Регистрация
                   </Button>
                   }
               </Row>
             </Form>
+            <div>{error}</div>
           </Card>
     </Container>
   )
