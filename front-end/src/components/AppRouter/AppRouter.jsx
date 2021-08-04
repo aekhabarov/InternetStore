@@ -6,7 +6,6 @@ import { SHOP_ROUTE } from '../../utils/consts';
 
 function AppRouter() {
   const {user} = useContext(Context);
-  console.log(user);
   return (
     <Switch>
       {user._isAuth && privateRoutes.map(({path, Component}) => 

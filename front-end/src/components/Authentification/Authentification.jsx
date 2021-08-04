@@ -5,6 +5,7 @@ import sendData from "./helpers/sendData";
 const Authentification = () => {
   //Переключатель между авторизацией и регистрацией
   const [logReg, setLogReg] = useState(true);
+  //
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -82,7 +83,7 @@ const Authentification = () => {
                   }
               </Row>
             </Form>
-            <div>{error}</div>
+            <div style={{lineHeight: "1rem", height: "1rem"}}>{error}</div>
           </Card>
     </Container>
   )

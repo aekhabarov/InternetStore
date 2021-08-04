@@ -19,6 +19,8 @@ async function sendData(...args) {
     }
     if (response.status === 200) {
       console.log("Авторизация выполнена успешно");
+      response = await response.json();
+      console.table(response);
     }
   } else {
     console.log("Регистрация");
@@ -38,7 +40,9 @@ async function sendData(...args) {
       setError(response.message);
     }
     if (response.status === 200) {
-      console.log("Авторизация выполнена успешно");
+      console.log("Регистрация выполнена успешно");
+      response = await response.json();
+      console.table(response);
     }
   }
 }
